@@ -23,7 +23,7 @@ main() {
         }
 
     if (max > 0) /* there was a line */
-        printf("%s", longest);
+        printf("length: %d, line: %s", max, longest);
     return 0;
 }
 
@@ -40,6 +40,14 @@ int _getline(char s[], int lim) {
     }
 
     s[i] = '\0';
+
+    /* If it was the line limit that stopped previous iteration,
+       then keep counting until it is an EOF or newline. */
+    if (c != EOF && c != '\n')
+        i++;
+    while ((c = getchar()) != EOF && c != '\n')
+        i++;
+
     return i;
 }
 
