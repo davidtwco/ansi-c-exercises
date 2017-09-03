@@ -42,7 +42,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 2-10 (Pg 52)** - Rewrite the function `lower`, which converts upper case letters to lower case, with a conditional expression instead of if-else. - [Solution](lower.c)
 
 ## Chapter 3 - Control Flow
-- [ ] **Ex 3-1 (Pg 58)** - Our binary search makes two tests inside the loop, when one would suffice (at the price of more tests outside). Write a version with only one test inside the loop and measure the difference in run-time.
+- [x] **Ex 3-1 (Pg 58)** - Our binary search makes two tests inside the loop, when one would suffice (at the price of more tests outside). Write a version with only one test inside the loop and measure the difference in run-time. - [Solution](binarysearch.c)
 - [ ] **Ex 3-2 (Pg 60)** - Write a function `escape(s,t)` that converts characters like newline and tab into visible escape sequences like `\n` and `\t` as it copies the string `t` to `s`. Use a `switch`. Write a function for the other direction as well, converting escape sequences into the real characters.
 - [ ] **Ex 3-3 (Pg 63)** - Write a function `expand(s1,s2)` that expands shorthand notations like `a-z` in the string `s1` into the equivalent complete list `abc...xyz` in `s2` . Allow for letters of either case and digits, and be prepared to handle cases like `a-b-c` and `a-z0-9` and `-a-z`. Arrange that a leading or trailing - is taken literally.
 - [ ] **Ex 3-4 (Pg 64)** - In a two's complement number representation, our version of `itoa` does not handle the largest negative number, that is, the value of `n` equal to `-(2 to the power (wordsize - 1))`. Explain why not. Modify it to print that value correctly regardless of the machine on which it runs.
