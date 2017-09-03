@@ -38,7 +38,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 2-6 (Pg 49)** - Write a function `setbits(x,p,n,y)` that returns `x` with the `n` bits that begin at position `p` set to the rightmost `n` bits of `y`, leaving the other bits unchanged. - [Solution](setbits.c)
 - [x] **Ex 2-7 (Pg 49)** - Write a function `invert(x,p,n)` that returns `x` with the `n` bits that begin at position `p` inverted (i.e., 1 changed into 0 and vice versa), leaving the others unchanged. - [Solution](invert.c)
 - [x] **Ex 2-8 (Pg 49)** - Write a function `rightrot(x,n)` that returns the value of the integer `x` rotated to the right by `n` bit positions. - [Solution](rightrot.c)
-- [ ] **Ex 2-9 (Pg 51)** - In a two's complement number system, `x &= (x-1)` deletes the rightmost 1-bit in `x`. Explain why. Use this observation to write a faster version of `bitcount`.
+- [x] **Ex 2-9 (Pg 51)** - In a two's complement number system, `x &= (x-1)` deletes the rightmost 1-bit in `x`. Explain why. Use this observation to write a faster version of `bitcount`. - [Solution](fasterBitcount.c)
 - [ ] **Ex 2-10 (Pg 52)** - Rewrite the function `lower`, which converts upper case letters to lower case, with a conditional expression instead of if-else.
 
 ## Chapter 3 - Control Flow
