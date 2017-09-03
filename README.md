@@ -5,7 +5,7 @@ All files will either be from a commit that lists the exercise or will contain a
 
 ## Chapter 1 - A Tutorial Introduction
 - [x] **Ex 1-1 (Pg 8)** - Run the "hello world" program on your system. Experiment with leaving out parts of the program, to see what error messages you get.
-- [x] **Ex 1-2 (Pg 8)** - Experiment to find out what happens when `printf`'s argument string contains \c, where c is some character not listed above.
+- [x] **Ex 1-2 (Pg 8)** - Experiment to find out what happens when `printf`'s argument string contains `\c`, where c is some character not listed above.
 - [x] **Ex 1-3 (Pg 13)** - Modify the temperature conversion program to print a heading above the table. - [Solution](fahrenheitCelsius.c)
 - [x] **Ex 1-4 (Pg 13)** - Write a program to print the corresponding Celsius to Fahrenheit table. - [Solution](celsiusFahrenheit.c)
 - [x] **Ex 1-5 (Pg 14)** - Modify the temperature conversion program to print the table in reverse order, that is, from 300 degrees to 0. - [Solution](fahrenheitCelsiusForLoop.c)
@@ -22,8 +22,8 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 1-16 (Pg 30)** - Revise the main routine of the longest-line program so it will correctly print the length of arbitrarily long input lines, and as much as possible of the text. - [Solution](printLongestLine.c)
 - [x] **Ex 1-17 (Pg 31)** - Write a program to print all input lines that are longer than 80 characters. - [Solution](printLinesLongerThan80Chars.c)
 - [x] **Ex 1-18 (Pg 31)** - Write a program to remove all trailing blanks and tabs from each line of input, and to delete entirely blank lines. - [Solution](removeTrailingWhitespaceFromInput.c)
-- [x] **Ex 1-19 (Pg 31)** - Write a function `reverse(s)` that reverses the character string s . Use it to write a program that reverses its input a line at a time. - [Solution](reverseLines.c)
-- [x] **Ex 1-20 (Pg 34)** - Write a program `detab` that replaces tabs in the input with the proper number of blanks to space to the next tab stop. Assume a fixed set of tab stops, say every n columns. Should n be a variable or a symbolic parameter? - [Solution](detab.c)
+- [x] **Ex 1-19 (Pg 31)** - Write a function `reverse(s)` that reverses the character string `s`. Use it to write a program that reverses its input a line at a time. - [Solution](reverseLines.c)
+- [x] **Ex 1-20 (Pg 34)** - Write a program `detab` that replaces tabs in the input with the proper number of blanks to space to the next tab stop. Assume a fixed set of tab stops, say every `n` columns. Should n be a variable or a symbolic parameter? - [Solution](detab.c)
 - [x] **Ex 1-21 (Pg 34)** - Write a program `entab` that replaces strings of blanks with the minimum number of tabs and blanks to achieve the same spacing. Use the same stops as for `detab` . When either a tab or a single blank would suffice to reach a tab stop, which should be given preference? - [Solution](entab.c)
 - [x] **Ex 1-22 (Pg 34)** - Write a program to "fold" long input lines into two or more shorter lines after the last non-blank character that occurs before the n-th column of input. Make sure your program does something intelligent with very long lines, and if there are no blanks or tabs before the specified column. - [Solution](fold.c)
 - [x] **Ex 1-23 (Pg 34)** - Write a program to remove all comments from a C program. Don't forget to handle quoted strings and character constants properly. C comments do not nest. - [Solution](removeComments.c)
@@ -78,7 +78,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [ ] **Ex 5-10 (Pg 118)** - Write the program `expr`, which evaluates a reverse Polish expression from the command line, where each operator or operand is a separate argument. For example, `expr 2 3 4 + *` evaluates `2 X (3+4)`.
 - [ ] **Ex 5-11 (Pg 118)** - Modify the programs `entab` and `detab` (written as exercises in Chapter 1) to accept a list of tab stops as arguments. Use the default tab settings if there are no arguments.
 - [ ] **Ex 5-12 (Pg 118)** - Extend `entab` and `detab` to accept the shorthand `entab -m +n` to mean tab stops every `n` columns, starting at column `m`. Choose convenient (for the user) default behavior.
-- [ ] **Ex 5-13 (Pg 118)** - Write the program `tail`, which prints the last `n` lines of its input. By default, `n` is 10, say, but it can be changed by an optional argument, so that `tail -n` prints the last n lines. The program should behave rationally no matter how unreasonable the input or the value of `n`. Write the program so it makes the best use of available storage; lines should be stored as in the sorting program of Section 5.6, not in a two-dimensional array of fixed size.
+- [ ] **Ex 5-13 (Pg 118)** - Write the program `tail`, which prints the last `n` lines of its input. By default, `n` is 10, say, but it can be changed by an optional argument, so that `tail -n` prints the last `n` lines. The program should behave rationally no matter how unreasonable the input or the value of `n`. Write the program so it makes the best use of available storage; lines should be stored as in the sorting program of Section 5.6, not in a two-dimensional array of fixed size.
 - [ ] **Ex 5-14 (Pg 121)** - Modify the sort program to handle a `-r` flag, which indicates sorting in reverse (decreasing) order. Be sure that `-r` works with `-n`.
 - [ ] **Ex 5-15 (Pg 121)** - Add the option `-f` to fold upper and lower case together, so that case distinctions are not made during sorting; for example, `a` and `A` compare equal.
 - [ ] **Ex 5-16 (Pg 121)** - Add the `-d` ("directory order") option, which makes comparisons only on letters, numbers and blanks. Make sure it works in conjunction with `-f`.
