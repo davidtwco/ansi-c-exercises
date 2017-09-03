@@ -31,7 +31,7 @@ All files will either be from a commit that lists the exercise or will contain a
 
 ## Chapter 2 - Types, Operators and Expressions
 - [x] **Ex 2-1 (Pg 36)** - Write a program to determine the ranges of `char`, `short`, `int`, and `long` variables, both `signed` and `unsigned`, by printing appropriate values from standard headers and by direct computation. Harder if you compute them: determine the ranges of the various floating-point types. - [Solution](typeRanges.c)
-- [ ] **Ex 2-2 (Pg 42)** - Write a loop equivalent to the for loop above without using `&&` or `||`.
+- [x] **Ex 2-2 (Pg 42)** - Write a loop equivalent to the for loop above without using `&&` or `||`. - [Solution](loopEquivalentNoAndOr.c)
 - [ ] **Ex 2-3 (Pg 46)** - Write the function `htoi(s)`, which converts a string of hexadecimal digits (including an optional `0x` or `0X`) into its equivalent integer value. The allowable digits are 0 through 9, a through f, and A through F.
 - [ ] **Ex 2-4 (Pg 48)** - Write an alternate version of `squeeze(s1,s2)` that deletes each character in the string `s1` that matches any character in the string `s2` .
 - [ ] **Ex 2-5 (Pg 48)** - Write the function `any(s1,s2)`, which returns the first location in the string `s1` where any character from the string `s2` occurs, or -1 if `s1` contains no characters from `s2`. (The standard library function `strpbrk` does the same job but returns a pointer to the location.)
