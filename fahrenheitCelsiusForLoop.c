@@ -4,6 +4,7 @@
 #define    UPPER   300  /* upper limit */
 #define    STEP    20   /* step size */
 
+/* example from Ch 1, Sec 1.3, Pg 13 */
 /* print Fahrenheit-Celsius table */
 main() {
     int fahr;

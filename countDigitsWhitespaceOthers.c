@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+/* example from Ch 1, Sec 1.6, Pg 22 */
 /* count digits, white space, others */
 main() {
     int c, i, nwhite, nother;

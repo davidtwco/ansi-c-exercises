@@ -3,6 +3,7 @@
 #define    IN   1    /* inside a word */
 #define    OUT  0    /* outside a word */
 
+/* example from Ch 1, Sec 1.5.4, Pg 20 */
 /* count lines, words, and characters in input */
 main() {
     int c, nl, nw, nc, state;

@@ -2,6 +2,7 @@
 
 int power(int m, int n);
 
+/* example from Ch 1, Sec 1.7, Pg 24, 25 */
 /* test power function */
 main() {
     int i;
