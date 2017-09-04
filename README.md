@@ -50,7 +50,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 3-6 (Pg 64)** - Write a version of `itoa` that accepts three arguments instead of two. The third argument is a minimum field width; the converted number must be padded with blanks on the left if necessary to make it wide enough. - [Solution](itoaFieldWidth.c)
 
 ## Chapter 4 - Functions and Program Structure
-- [ ] **Ex 4-1 (Pg 71)** - Write the function `strrindex(s,t)`, which returns the position of the rightmost occurrence of `t` in `s`, or -1 if there is none.
+- [x] **Ex 4-1 (Pg 71)** - Write the function `strrindex(s,t)`, which returns the position of the rightmost occurrence of `t` in `s`, or -1 if there is none. - [Solution](strrindex.c)
 - [ ] **Ex 4-2 (Pg 73)** - Extend `atof` to handle scientific notation of the form `123.45e-6` where a floating-point number may be followed by e or E and an optionally signed exponent.
 - [ ] **Ex 4-3 (Pg 79)** - Given the basic framework, it's straightforward to extend the calculator. Add the modulus (`%`) operator and provisions for negative numbers.
 - [ ] **Ex 4-4 (Pg 79)** - Add commands to print the top element of the stack without popping, to duplicate it, and to swap the top two elements. Add a command to clear the stack.
