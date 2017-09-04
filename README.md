@@ -47,7 +47,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 3-3 (Pg 63)** - Write a function `expand(s1,s2)` that expands shorthand notations like `a-z` in the string `s1` into the equivalent complete list `abc...xyz` in `s2` . Allow for letters of either case and digits, and be prepared to handle cases like `a-b-c` and `a-z0-9` and `-a-z`. Arrange that a leading or trailing - is taken literally. - [Solution](expand.c)
 - [x] **Ex 3-4 (Pg 64)** - In a two's complement number representation, our version of `itoa` does not handle the largest negative number, that is, the value of `n` equal to `-(2 to the power (wordsize - 1))`. Explain why not. Modify it to print that value correctly regardless of the machine on which it runs. - [Solution](itoa.c)
 - [x] **Ex 3-5 (Pg 64)** - Write the function `itob(n,s,b)` that converts the integer `n` into a base `b` character representation in the string `s`. In particular, `itob(n,s,16)` formats `n` as a hexadecimal integer in `s`. - [Solution](itob.c)
-- [ ] **Ex 3-6 (Pg 64)** - Write a version of `itoa` that accepts three arguments instead of two. The third argument is a minimum field width; the converted number must be padded with blanks on the left if necessary to make it wide enough.
+- [x] **Ex 3-6 (Pg 64)** - Write a version of `itoa` that accepts three arguments instead of two. The third argument is a minimum field width; the converted number must be padded with blanks on the left if necessary to make it wide enough. - [Solution](itoaFieldWidth.c)
 
 ## Chapter 4 - Functions and Program Structure
 - [ ] **Ex 4-1 (Pg 71)** - Write the function `strrindex(s,t)`, which returns the position of the rightmost occurrence of `t` in `s`, or -1 if there is none.
