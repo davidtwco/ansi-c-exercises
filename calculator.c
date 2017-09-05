@@ -6,6 +6,9 @@
 #define NUMBER '0' /* signal that a number was found */
 
 int getop(char[]);
+void duplicate(void);
+void swap(void);
+void printTopOfStack(void);
 void push(double);
 double pop(void);
 
@@ -13,7 +16,7 @@ double pop(void);
 
 /* reverse Polish calculator */
 int main() {
-    int type;
+    int type, previousType;
     double op2;
     char s[MAXOP];
 
@@ -21,6 +24,17 @@ int main() {
         switch (type) {
             case NUMBER:
                 push(atof(s));
+                break;
+            case 't':
+                printTopOfStack();
+                break;
+            case 's':
+                swap();
+                printf("swapped\n\n");
+                break;
+            case 'd':
+                duplicate();
+                printf("duplicated\n\n");
                 break;
             case '+':
                 push(pop() + pop());
@@ -48,12 +62,14 @@ int main() {
                     printf("error: cannot mod by zero");
                 break;
             case '\n':
-                printf("\t%.8g\n", pop());
+                if (previousType != 't' && previousType != 's' && previousType != 'd')
+                    printf("\t%.8g\n", pop());
                 break;
             default:
                 printf("error: unknown command %s\n", s);
                 break;
         }
+        previousType = type;
     }
     return 0;
 }
@@ -62,6 +78,37 @@ int main() {
 
 int sp = 0; /* next free stack position */
 double val[MAXVAL]; /* value stack */
+
+/* print: print top two elements of stack */
+void printTopOfStack(void) {
+    if (sp < 1) { /* need minimum of two elements */
+        printf("not enough elements\n");
+        return;
+    }
+    char s[80];
+
+    sprintf(s, "top: %f", val[sp - 1]);
+    printf("%s\n\n", s);
+}
+
+/* swap: swap top two stack elements */
+void swap(void) {
+    if (sp < 2) { /* need minimum of two elements */
+        printf("not enough elements\n");
+        return;
+    }
+
+    double temp = val[sp - 1];
+    val[sp - 1] = val[sp - 2];
+    val[sp - 2] = temp;
+}
+
+/* duplicate: duplicate the stack */
+void duplicate(void) {
+    int j, t = sp;
+    for (j = 0; j < t; j++)
+        push(val[j]);
+}
 
 /* push: push f onto value stack */
 void push(double f) {
