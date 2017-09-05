@@ -54,7 +54,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 4-2 (Pg 73)** - Extend `atof` to handle scientific notation of the form `123.45e-6` where a floating-point number may be followed by e or E and an optionally signed exponent. - [Solution](atof.c)
 - [x] **Ex 4-3 (Pg 79)** - Given the basic framework, it's straightforward to extend the calculator. Add the modulus (`%`) operator and provisions for negative numbers. - [Solution](calculator.c)
 - [x] **Ex 4-4 (Pg 79)** - Add commands to print the top element of the stack without popping, to duplicate it, and to swap the top two elements. Add a command to clear the stack. - [Solution](calculator.c)
-- [ ] **Ex 4-5 (Pg 79)** - Add access to library functions like `sin`, `exp`, and `pow`. See `<math.h>` in Appendix B, Section 4.
+- [x] **Ex 4-5 (Pg 79)** - Add access to library functions like `sin`, `exp`, and `pow`. See `<math.h>` in Appendix B, Section 4. - [Solution](calculator.c)
 - [ ] **Ex 4-6 (Pg 79)** - Add commands for handling variables. (It's easy to provide twenty-six variables with single-letter names.) Add a variable for the most recently printed value.
 - [ ] **Ex 4-7 (Pg 79)** - Write a routine `ungets(s)` that will push back an entire string onto the input. Should `ungets` know about `buf` and `bufp`, or should it just use `ungetch`?
 - [ ] **Ex 4-8 (Pg 79)** - Suppose that there will never be more than one character of pushback. Modify `getch` and `ungetch` accordingly.
