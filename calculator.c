@@ -6,6 +6,7 @@
 
 #define MAXOP 100 /* max size of operand or operator */
 #define MAXVARS 26 /* number of variables */
+#define MAXLINE 1000 /* max line length */
 #define NUMBER 'N' /* signal that a number was found */
 #define FUNCTION 'F' /* signal that a number was found */
 #define VARIABLE 'V' /* signal that a variable was found */
@@ -20,8 +21,12 @@ void pushv(char f[]);
 double pop(void);
 char* popv(void);
 
+int _getline(char line[], int maxline);
+
 /* must compile with 'gcc calculator.c -lm -o a.out' */
 
+char line[MAXLINE];
+int lp;
 double vars[MAXVARS];
 
 /* reverse Polish calculator */
@@ -37,52 +42,56 @@ int main() {
     for (i = 0; i < MAXVARS; ++i)
         vars[i] = 0;
 
-    while ((type = getop(s)) != EOF) {
-        switch (type) {
-            case NUMBER:
-                pushv(s);
-                break;
-            case FUNCTION:
-                callFunc(s);
-                printTopOfStack();
-                break;
-            case VARIABLE:
-                pushv(s);
-                break;
-            case 'q':
-                return 0;
-            case '+':
-                push(pop() + pop());
-                break;
-            case '*':
-                push(pop() * pop());
-                break;
-            case '-':
-                op2 = pop();
-                push(pop() - op2);
-                break;
-            case '/':
-                op2 = pop();
-                if (op2 != 0.0)
-                    push(pop() / op2);
-                else
-                    printf("error: zero division\n");
-                break;
-            case '%':
-                op2 = pop();
-                if (op2 != 0.0) {
-                    int r = fmod(pop(), op2);
-                    push((r * op2 < 0) ? r + op2 : r);
-                } else
-                    printf("error: cannot mod by zero");
-                break;
-            case '\n':
-                printTopOfStack();
-                pop();
-                break;
-            default:
-                printf("error: unknown command %s\n", s);
-                break;
+    while (_getline(line, MAXLINE) != 0) {
+        lp = 0;
+        while ((type = getop(s)) != '\0') {
+            switch (type) {
+                case NUMBER:
+                    pushv(s);
+                    break;
+                case FUNCTION:
+                    callFunc(s);
+                    printTopOfStack();
+                    break;
+                case VARIABLE:
+                    pushv(s);
+                    break;
+                case 'q':
+                    return 0;
+                case '+':
+                    push(pop() + pop());
+                    break;
+                case '*':
+                    push(pop() * pop());
+                    break;
+                case '-':
+                    op2 = pop();
+                    push(pop() - op2);
+                    break;
+                case '/':
+                    op2 = pop();
+                    if (op2 != 0.0)
+                        push(pop() / op2);
+                    else
+                        printf("error: zero division\n");
+                    break;
+                case '%':
+                    op2 = pop();
+                    if (op2 != 0.0) {
+                        int r = fmod(pop(), op2);
+                        push((r * op2 < 0) ? r + op2 : r);
+                    } else
+                        printf("error: cannot mod by zero");
+                    break;
+                case '\n':
+                    printTopOfStack();
+                    pop();
+                    break;
+                default:
+                    printf("error: unknown command type: \"%c\", inpt: \"%s\"\n",
+                           type, s);
+                    break;
+            }
         }
     }
     return 0;
@@ -223,9 +232,20 @@ char* popv(void) {
     }
 }
 
-int getch(void);
-void ungetch(int);
-void ungets(char s[]);
+/* getline:  get line into s, return length */
+int _getline(char s[], int lim)
+{
+    int c, i;
+
+    i = 0;
+    while (--lim > 0 && (c = getchar()) != EOF && c != '\n')
+        s[i++] = c;
+    if (c == '\n')
+        s[i++] = c;
+    s[i] = '\0';
+
+    return i;
+}
 
 /* getop: get next operator or numeric operand */
 int getop(char s[]) {
@@ -235,23 +255,21 @@ int getop(char s[]) {
     /* skip any whitespace, keep last character
      * (since it will not be whitespace) for
      * later processing */
-    while ((s[i] = c = getch()) == ' ' || c == '\t')
+    while ((s[i] = c = line[lp++]) == ' ' || c == '\t')
         ;
 
     /* if it was a letter, process as func name. */
     if (isalpha(c)) {
-        int temp = getch();
+        int temp = line[lp];
 
         /* if not followed by another letter then it
          * is a variable name */
         if (!isalpha(temp)) {
-            ungetch(temp);
             s[++i] = '\0';
             return VARIABLE;
         }
 
-        ungetch(temp);
-        while (isalpha(s[++i] = c = getch()))
+        while (isalpha(s[++i] = c = line[lp++]))
             ;
         s[i] = '\0';
         return FUNCTION;
@@ -260,11 +278,10 @@ int getop(char s[]) {
     /* if it was a '-' then check if it is a minus operator
      * or a negative number */
     if(c == '-') {
-        int temp = getch();
+        int temp = line[lp];
 
         /* it is a operator */
         if (!isdigit(temp)) {
-            ungetch(temp);
             return c;
         }
 
@@ -279,54 +296,15 @@ int getop(char s[]) {
 
     /* collect integer part */
     if (isdigit(c))
-        while (isdigit(s[++i] = c = getch()))
+        while (isdigit(s[++i] = c = line[lp++]))
             ;
 
     /* collect fraction part */
     if (c == '.')
-        while (isdigit(s[++i] = c = getch()))
+        while (isdigit(s[++i] = c = line[lp++]))
             ;
 
     s[i] = '\0';
-    if (c != EOF)
-        ungetch(c);
+    lp--;
     return NUMBER;
 }
-
-#define BUF_UNOCCUPIED 0
-#define BUF_OCCUPIED 1
-
-char buf = EOF; /* buffer for ungetch */
-int buf_occupied = BUF_UNOCCUPIED;
-
-/* ungets does not need to know about buf or bufp.
- *
- * We need to be careful whether we add a string from the front
- * or from the back. Adding from the back means that getch will be
- * able to rebuild the string through subsequent calls. */
-void ungets(char s[]) {
-    long i;
-    for (i = strlen(s) - 1; i >= 0; i--)
-        ungetch(s[i]);
-}
-
-int getch(void) { /* get a (possibly pushed back) character */
-    if (buf_occupied == BUF_UNOCCUPIED) {
-        return getchar();
-    }
-
-    char temp = buf;
-    buf = EOF;
-    buf_occupied = BUF_UNOCCUPIED;
-    return temp;
-}
-
-void ungetch(int c) { /* push character back on input */
-    if (buf_occupied == BUF_OCCUPIED)
-        printf("ungetch: too many characters\n");
-    else {
-        buf = c;
-        buf_occupied = BUF_OCCUPIED;
-    }
-}
-
