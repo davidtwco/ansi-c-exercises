@@ -60,7 +60,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 4-8 (Pg 79)** - Suppose that there will never be more than one character of pushback. Modify `getch` and `ungetch` accordingly. - [Solution](calculator.c)
 - [x] **Ex 4-9 (Pg 79)** - Our `getch` and `ungetch` do not handle a pushed-back `EOF` correctly. Decide what their properties ought to be if an `EOF` is pushed back, then implement your design. - [Solution](calculator.c)
 - [x] **Ex 4-10 (Pg 79)** - An alternate organization uses `getline` to read an entire input line; this makes `getch` and `ungetch` unnecessary. Revise the calculator to use this approach. - [Solution](calculator.c)
-- [ ] **Ex 4-11 (Pg 83)** - Modify `getop` so that it doesn't need to use `ungetch`. Hint: use an internal static variable.
+- [x] **Ex 4-11 (Pg 83)** - Modify `getop` so that it doesn't need to use `ungetch`. Hint: use an internal static variable. - [Solution](getop.c)
 - [ ] **Ex 4-12 (Pg 88)** - Adapt the ideas of `printd` to write a recursive version of `itoa`; that is, convert an integer into a string by calling a recursive routine.
 - [ ] **Ex 4-13 (Pg 88)** - Write a recursive version of the function `reverse(s)`, which reverses the string `s` in place.
 - [ ] **Ex 4-14 (Pg 91)** - Define a macro `swap(t,x,y)` that interchanges two arguments of type `t`. (Block structure will help.)
