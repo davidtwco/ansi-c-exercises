@@ -225,6 +225,7 @@ char* popv(void) {
 
 int getch(void);
 void ungetch(int);
+void ungets(char s[]);
 
 /* getop: get next operator or numeric operand */
 int getop(char s[]) {
@@ -296,6 +297,17 @@ int getop(char s[]) {
 
 char buf[BUFSIZE]; /* buffer for ungetch */
 int bufp = 0; /* next free position in buf */
+
+/* ungets does not need to know about buf or bufp.
+ *
+ * We need to be careful whether we add a string from the front
+ * or from the back. Adding from the back means that getch will be
+ * able to rebuild the string through subsequent calls. */
+void ungets(char s[]) {
+    long i;
+    for (i = strlen(s) - 1; i >= 0; i--)
+        ungetch(s[i]);
+}
 
 int getch(void) { /* get a (possibly pushed back) character */
     return (bufp > 0) ? buf[--bufp] : getchar();
