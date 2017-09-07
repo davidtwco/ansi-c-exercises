@@ -63,7 +63,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 4-11 (Pg 83)** - Modify `getop` so that it doesn't need to use `ungetch`. Hint: use an internal static variable. - [Solution](getop.c)
 - [x] **Ex 4-12 (Pg 88)** - Adapt the ideas of `printd` to write a recursive version of `itoa`; that is, convert an integer into a string by calling a recursive routine. - [Solution](itoaRecursive.c)
 - [x] **Ex 4-13 (Pg 88)** - Write a recursive version of the function `reverse(s)`, which reverses the string `s` in place. - [Solution](reverseRecursive.c)
-- [ ] **Ex 4-14 (Pg 91)** - Define a macro `swap(t,x,y)` that interchanges two arguments of type `t`. (Block structure will help.)
+- [x] **Ex 4-14 (Pg 91)** - Define a macro `swap(t,x,y)` that interchanges two arguments of type `t`. (Block structure will help.) - [Solution](swapMacro.c)
 
 ## Chapter 5 - Pointers and Arrays
 - [ ] **Ex 5-1 (Pg 97)** - As written, `getint` treats a `+` or `-` not followed by a digit as a valid representation of zero. Fix it to push such a character back on the input.
