@@ -293,7 +293,11 @@ int getop(char s[]) {
     return NUMBER;
 }
 
+#define BUF_UNOCCUPIED 0
+#define BUF_OCCUPIED 1
+
 char buf = EOF; /* buffer for ungetch */
+int buf_occupied = BUF_UNOCCUPIED;
 
 /* ungets does not need to know about buf or bufp.
  *
@@ -307,19 +311,22 @@ void ungets(char s[]) {
 }
 
 int getch(void) { /* get a (possibly pushed back) character */
-    if (buf == EOF) {
+    if (buf_occupied == BUF_UNOCCUPIED) {
         return getchar();
     }
 
     char temp = buf;
     buf = EOF;
+    buf_occupied = BUF_UNOCCUPIED;
     return temp;
 }
 
 void ungetch(int c) { /* push character back on input */
-    if (buf != EOF)
+    if (buf_occupied == BUF_OCCUPIED)
         printf("ungetch: too many characters\n");
-    else
+    else {
         buf = c;
+        buf_occupied = BUF_OCCUPIED;
+    }
 }
 
