@@ -1,37 +1,56 @@
+#include <ctype.h>
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h> /* for atof() */
 
 #define MAXOP 100 /* max size of operand or operator */
-#define NUMBER '0' /* signal that a number was found */
+#define MAXVARS 26 /* number of variables */
+#define NUMBER 'N' /* signal that a number was found */
 #define FUNCTION 'F' /* signal that a number was found */
+#define VARIABLE 'V' /* signal that a variable was found */
 
 void callFunc(char funcName[]);
 int getop(char[]);
 void duplicate(void);
 void swap(void);
 void printTopOfStack(void);
-void push(double);
+void push(double d);
+void pushv(char f[]);
 double pop(void);
+char* popv(void);
 
 /* must compile with 'gcc calculator.c -lm -o a.out' */
 
+double vars[MAXVARS];
+
 /* reverse Polish calculator */
 int main() {
-    int type;
+    int i, type;
     double op2;
     char s[MAXOP];
+
+    /* We set all our variables to zero as a default value to
+     * avoid any issues when accessing variables that are not
+     * explicitly set. */
+    printf("all variables are set to zero by default\n");
+    for (i = 0; i < MAXVARS; ++i)
+        vars[i] = 0;
 
     while ((type = getop(s)) != EOF) {
         switch (type) {
             case NUMBER:
-                push(atof(s));
+                pushv(s);
                 break;
             case FUNCTION:
                 callFunc(s);
                 printTopOfStack();
                 break;
+            case VARIABLE:
+                pushv(s);
+                break;
+            case 'q':
+                return 0;
             case '+':
                 push(pop() + pop());
                 break;
@@ -70,7 +89,8 @@ int main() {
 }
 
 void callFunc(char funcName[]) {
-    int op2;
+    double op2;
+    char vop2[MAXOP];
 
     if (strcmp(funcName, "sin") == 0)
         push(sin(pop()));
@@ -100,14 +120,32 @@ void callFunc(char funcName[]) {
         swap();
     else if (strcmp(funcName, "duplicate") == 0)
         duplicate();
-    else
+    else if (strcmp(funcName, "set") == 0) {
+        /* We pop both our operands, validate their types and
+         * set the corresponding index for our variable in the
+         * vars array. */
+        strcpy(vop2, popv());
+        op2 = pop();
+
+        if (!isalpha(vop2[0])) {
+            printf("error: second argument must be variable\n");
+        } else {
+            int index = vop2[0] - 'a';
+            vars[index] = op2;
+
+            printf("set var \"%c\" to \"%g\", pushing \"%c\" onto stack\n",
+                   vop2[0], op2, vop2[0]);
+
+            pushv(vop2);
+        }
+    } else
         printf("error: unknown function %s\n", funcName);
 }
 
 #define MAXVAL 100 /* maximum depth of val stack */
 
 int sp = 0; /* next free stack position */
-double val[MAXVAL]; /* value stack */
+char val[MAXOP][MAXVAL]; /* value stack */
 
 /* print: print top two elements of stack */
 void printTopOfStack(void) {
@@ -116,7 +154,7 @@ void printTopOfStack(void) {
         return;
     }
 
-    printf("\t%.8g\n", val[sp - 1]);
+    printf("\t%s\n", val[sp - 1]);
 }
 
 /* swap: swap top two stack elements */
@@ -126,9 +164,10 @@ void swap(void) {
         return;
     }
 
-    double temp = val[sp - 1];
-    val[sp - 1] = val[sp - 2];
-    val[sp - 2] = temp;
+    char temp[MAXOP];
+    strcpy(temp, val[sp - 1]);
+    strcpy(val[sp - 1], val[sp - 2]);
+    strcpy(val[sp - 2], temp);
     printf("swapped\n\n");
 }
 
@@ -136,29 +175,53 @@ void swap(void) {
 void duplicate(void) {
     int j, t = sp;
     for (j = 0; j < t; j++)
-        push(val[j]);
+        pushv(val[j]);
     printf("duplicated\n\n");
 }
 
-/* push: push f onto value stack */
-void push(double f) {
-    if (sp < MAXVAL)
-        val[sp++] = f;
-    else
-        printf("error: stack full, can't push %g\n", f);
+/* push: push number d onto value stack */
+void push(double d) {
+    char temp[MAXOP];
+    if (sp < MAXVAL) {
+        sprintf(temp, "%g", d);
+        pushv(temp);
+    } else
+        printf("error: stack full, can't push %g\n", d);
 }
 
-/* pop: pop and return top value from stack */
+/* pushv: push variable or number f onto value stack */
+void pushv(char f[]) {
+    if (sp < MAXVAL)
+        strcpy(val[sp++], f);
+    else
+        printf("error: stack full, can't push %s\n", f);
+}
+
+/* pop: pop and return top value from stack as number */
 double pop(void) {
-    if (sp > 0)
-        return val[--sp];
-    else {
+    char r[MAXOP];
+    if (sp > 0) {
+        strcpy(r, val[--sp]);
+        /* If we pop a variable, find its numeric value. */
+        if (isalpha(r[0]))
+            return vars[r[0] - 'a'];
+        else
+            return atof(r);
+    } else {
         printf("error: stack empty\n");
         return 0.0;
     }
 }
 
-#include <ctype.h>
+/* popv: pop and return top value from stack as number or variable */
+char* popv(void) {
+    if (sp > 0)
+        return val[--sp];
+    else {
+        printf("error: stack empty\n");
+        return "0.0";
+    }
+}
 
 int getch(void);
 void ungetch(int);
@@ -179,10 +242,11 @@ int getop(char s[]) {
         int temp = getch();
 
         /* if not followed by another letter then it
-         * is a operator */
+         * is a variable name */
         if (!isalpha(temp)) {
             ungetch(temp);
-            return c;
+            s[++i] = '\0';
+            return VARIABLE;
         }
 
         ungetch(temp);
