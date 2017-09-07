@@ -57,7 +57,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 4-5 (Pg 79)** - Add access to library functions like `sin`, `exp`, and `pow`. See `<math.h>` in Appendix B, Section 4. - [Solution](calculator.c)
 - [x] **Ex 4-6 (Pg 79)** - Add commands for handling variables. (It's easy to provide twenty-six variables with single-letter names.) Add a variable for the most recently printed value. - [Solution](calculator.c)
 - [x] **Ex 4-7 (Pg 79)** - Write a routine `ungets(s)` that will push back an entire string onto the input. Should `ungets` know about `buf` and `bufp`, or should it just use `ungetch`? - [Solution](calculator.c)
-- [ ] **Ex 4-8 (Pg 79)** - Suppose that there will never be more than one character of pushback. Modify `getch` and `ungetch` accordingly.
+- [x] **Ex 4-8 (Pg 79)** - Suppose that there will never be more than one character of pushback. Modify `getch` and `ungetch` accordingly. - [Solution](calculator.c)
 - [ ] **Ex 4-9 (Pg 79)** - Our `getch` and `ungetch` do not handle a pushed-back `EOF` correctly. Decide what their properties ought to be if an `EOF` is pushed back, then implement your design.
 - [ ] **Ex 4-10 (Pg 79)** - An alternate organization uses `getline` to read an entire input line; this makes `getch` and `ungetch` unnecessary. Revise the calculator to use this approach.
 - [ ] **Ex 4-11 (Pg 83)** - Modify `getop` so that it doesn't need to use `ungetch`. Hint: use an internal static variable.
