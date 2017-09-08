@@ -66,7 +66,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 4-14 (Pg 91)** - Define a macro `swap(t,x,y)` that interchanges two arguments of type `t`. (Block structure will help.) - [Solution](swapMacro.c)
 
 ## Chapter 5 - Pointers and Arrays
-- [ ] **Ex 5-1 (Pg 97)** - As written, `getint` treats a `+` or `-` not followed by a digit as a valid representation of zero. Fix it to push such a character back on the input.
+- [x] **Ex 5-1 (Pg 97)** - As written, `getint` treats a `+` or `-` not followed by a digit as a valid representation of zero. Fix it to push such a character back on the input. - [Solution](getint.c)
 - [ ] **Ex 5-2 (Pg 97)** - Write `getfloat`, the floating-point analog of `getint`. What type does `getfloat` return as its function value?
 - [ ] **Ex 5-3 (Pg 107)** - Write a pointer version of the function `strcat` that we showed in Chapter 2: `strcat(s,t)` copies the string `t` to the end of `s`.
 - [ ] **Ex 5-4 (Pg 107)** - Write the function `strend(s,t)`, which returns 1 if the string `t` occurs at the end of the string `s`, and zero otherwise.
