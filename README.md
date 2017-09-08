@@ -67,7 +67,7 @@ All files will either be from a commit that lists the exercise or will contain a
 
 ## Chapter 5 - Pointers and Arrays
 - [x] **Ex 5-1 (Pg 97)** - As written, `getint` treats a `+` or `-` not followed by a digit as a valid representation of zero. Fix it to push such a character back on the input. - [Solution](getint.c)
-- [ ] **Ex 5-2 (Pg 97)** - Write `getfloat`, the floating-point analog of `getint`. What type does `getfloat` return as its function value?
+- [x] **Ex 5-2 (Pg 97)** - Write `getfloat`, the floating-point analog of `getint`. What type does `getfloat` return as its function value? - [Solution](getfloat.c)
 - [ ] **Ex 5-3 (Pg 107)** - Write a pointer version of the function `strcat` that we showed in Chapter 2: `strcat(s,t)` copies the string `t` to the end of `s`.
 - [ ] **Ex 5-4 (Pg 107)** - Write the function `strend(s,t)`, which returns 1 if the string `t` occurs at the end of the string `s`, and zero otherwise.
 - [ ] **Ex 5-5 (Pg 107)** - Write versions of the library functions `strncpy`, `strncat`, and `strncmp`, which operate on at most the first `n` characters of their argument strings. For example, `strncpy(s,t,n)` copies at most `n` characters of `t` to `s`. Full descriptions are in Appendix B.
