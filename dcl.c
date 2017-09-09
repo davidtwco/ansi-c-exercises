@@ -5,6 +5,7 @@
 #define MAXTOKEN 100
 
 enum { NAME, PARENS, BRACKETS };
+enum { ERR_YES, ERR_NO };
 
 void dcl(void);
 void dirdcl(void);
@@ -15,6 +16,7 @@ char token[MAXTOKEN]; /* last token string */
 char name[MAXTOKEN]; /* identifier name */
 char datatype[MAXTOKEN]; /* data type = char, int, etc. */
 char out[1000]; /* output string */
+int errtoken = ERR_NO;
 
 /* example from Ch 5, Sec 5.12, Pg 123-125 */
 
@@ -47,12 +49,16 @@ void dirdcl(void) {
 
     if (tokentype == '(') { /* dcl */
         dcl();
-        if (tokentype != ')')
+        if (tokentype != ')') {
             printf("missing )\n");
+            errtoken = ERR_YES;
+        }
     } else if (tokentype == NAME) /* variable name */
         strcpy(name, token);
-    else
+    else {
         printf("error: expected name or (dcl)\n");
+        errtoken = ERR_YES;
+    }
 
     while ((type=gettoken()) == PARENS || type == BRACKETS)
         if (type == PARENS)
@@ -70,6 +76,11 @@ void ungetch(int);
 int gettoken(void) {
     int c;
     char *p = token;
+
+    if (errtoken == ERR_YES) {
+        errtoken = ERR_NO;
+        return tokentype;
+    }
 
     while ((c = getch()) == ' ' || c == '\t')
         ;

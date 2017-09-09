@@ -83,7 +83,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 5-15 (Pg 121)** - Add the option `-f` to fold upper and lower case together, so that case distinctions are not made during sorting; for example, `a` and `A` compare equal. - [Solution](sortFuncPointer.c)
 - [x] **Ex 5-16 (Pg 121)** - Add the `-d` ("directory order") option, which makes comparisons only on letters, numbers and blanks. Make sure it works in conjunction with `-f`. - [Solution](sortFuncPointer.c)
 - [x] **Ex 5-17 (Pg 121)** - Add a field-handling capability, so sorting may be done on fields within lines, each field sorted according to an independent set of options. (The index for this book was sorted with `-df` for the index category and `-n` for the page numbers.) - [Solution](sortFuncPointer.c)
-- [ ] **Ex 5-18 (Pg 126)** - Make `dcl` recover from input errors.
+- [x] **Ex 5-18 (Pg 126)** - Make `dcl` recover from input errors. - [Solution](dcl.c)
 - [ ] **Ex 5-19 (Pg 126)** - Modify `undcl` so that it does not add redundant parentheses to declarations.
 - [ ] **Ex 5-20 (Pg 126)** - Expand `dcl` to handle declarations with function argument types, qualifiers like `const`, and so on.
 
