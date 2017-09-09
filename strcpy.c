@@ -1,10 +1,9 @@
 /* example from Ch 5, Sec 5.5, Pg 105 */
 
-/* strcpy: copy t to s: array subscript version */
+/* strcpy: copy t to s: pointer version 1 */
 void strcpy(char *s, char *t) {
-    int i;
-
-    i = 0;
-    while((s[i] = t[i]) != '\0')
-        i++;
+    while ((*s = *t) != '\0') {
+        s++;
+        t++;
+    }
 }
