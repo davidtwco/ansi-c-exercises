@@ -2,10 +2,11 @@
 #include <string.h>
 
 #define MAXLINES 5000 /* max lines to be sorted */
+#define MAXSTORE 5000 /* max lines to be sorted */
 
 char *lineptr[MAXLINES]; /* pointers to the text lines */
 
-int readlines(char *lineptr[], int nlines);
+int readlines(char *lineptr[], int maxlines, char *linestore);
 void writelines(char *lineptr[], int nlines);
 
 void qsort(char *lineptr[], int left, int right);
@@ -15,8 +16,9 @@ void qsort(char *lineptr[], int left, int right);
 /* sort input lines */
 int main() {
     int nlines; /* number of input lines read */
+    char linestore[MAXSTORE]; /* storage for lines */
 
-    if ((nlines = readlines(lineptr, MAXLINES)) >= 0) {
+    if ((nlines = readlines(lineptr, MAXLINES, linestore)) >= 0) {
         printf("\nsorted:\n\n");
         qsort(lineptr, 0, nlines - 1);
         writelines(lineptr, nlines);
@@ -58,18 +60,20 @@ int _getline(char *s, int lim);
 char *alloc(int n);
 
 /* readlines: read input lines */
-int readlines(char *lineptr[], int maxlines) {
+int readlines(char *lineptr[], int maxlines, char *linestore) {
     int len, nlines;
     char *p, line[MAXLEN];
 
     nlines = 0;
+    p = linestore + strlen(linestore); /* first empty position */
     while ((len = _getline(line, MAXLEN)) > 0)
-        if (nlines >= maxlines || (p = alloc(len)) == NULL)
+        if (nlines >= maxlines || (strlen(linestore) + len) > MAXSTORE)
             return -1;
         else {
             line[len-1] = '\0'; /* delete newline */
             strcpy(p, line);
             lineptr[nlines++] = p;
+            p += len;
         }
     return nlines;
 }
@@ -78,26 +82,6 @@ int readlines(char *lineptr[], int maxlines) {
 void writelines(char *lineptr[], int nlines) {
     while (nlines-- > 0)
         printf("%s\n", *lineptr++);
-}
-
-#define ALLOCSIZE 1000 /* size of available space */
-
-static char allocbuf[ALLOCSIZE]; /* storage for alloc */
-static char *allocp = allocbuf; /* next free position */
-
-/* example from Ch 5, Sec 5.4, Pg 101 */
-
-char *alloc(int n) { /* return pointer to n characters */
-    if (allocbuf + ALLOCSIZE - allocp >= n) { /* it fits */
-        allocp += n;
-        return allocp - n; /* old p */
-    } else /* not enough room */
-        return 0;
-}
-
-void afree(char *p) { /* free storage pointed to by p */
-    if (p >= allocbuf && p < allocbuf + ALLOCSIZE)
-        allocp = p;
 }
 
 /* getline:  get line into s, return length */
