@@ -73,7 +73,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 5-5 (Pg 107)** - Write versions of the library functions `strncpy`, `strncat`, and `strncmp`, which operate on at most the first `n` characters of their argument strings. For example, `strncpy(s,t,n)` copies at most `n` characters of `t` to `s`. Full descriptions are in Appendix B. - [Solution](strn.c)
 - [x] **Ex 5-6 (Pg 107)** - Rewrite appropriate programs from earlier chapters and exercises with pointers instead of array indexing. Good possibilities include `getline` (Chapters 1 and 4), `atoi`, `itoa`, and their variants (Chapters 2, 3, and 4), `reverse` (Chapter 3), and `strindex` and `getop` (Chapter 4). - [Solution](pointerVariants.c)
 - [x] **Ex 5-7 (Pg 110)** - Rewrite `readlines` to store lines in an array supplied by `main`, rather than calling `alloc` to maintain storage. How much faster is the program? - [Solution](sort.c)
-- [ ] **Ex 5-8 (Pg 112)** - There is no error-checking in `day_of_year` or `month_day`. Remedy this defect.
+- [x] **Ex 5-8 (Pg 112)** - There is no error-checking in `day_of_year` or `month_day`. Remedy this defect. - [Solution](dayOfYear.c)
 - [ ] **Ex 5-9 (Pg 114)** - Rewrite the routines `day_of_year` and `month_day` with pointers instead of indexing.
 - [ ] **Ex 5-10 (Pg 118)** - Write the program `expr`, which evaluates a reverse Polish expression from the command line, where each operator or operand is a separate argument. For example, `expr 2 3 4 + *` evaluates `2 X (3+4)`.
 - [ ] **Ex 5-11 (Pg 118)** - Modify the programs `entab` and `detab` (written as exercises in Chapter 1) to accept a list of tab stops as arguments. Use the default tab settings if there are no arguments.
