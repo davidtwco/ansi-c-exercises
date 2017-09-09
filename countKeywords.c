@@ -46,8 +46,6 @@ struct key {
 int getword(char *, int);
 int binsearch(char *, struct key *, int);
 
-/* example from Ch 6, Sec 6.3, Pg 134 */
-
 /* count C keywords */
 int main() {
     int n;
@@ -90,25 +88,93 @@ void ungetch(int);
 int getword(char *word, int lim) {
     int c;
     char *w = word;
+    static int line_beg = 1; /* 1 at beginning of a new line */
+    static int after_slash = 0; /* 1 after '\' */
+    int after_star = 0; /* 1 after '*' */
 
-    while (isspace(c = getch()))
-        ;
+    if(isspace(c = getch()))
+        after_slash = 0;
+    while(isspace(c)) {
+        if(c == '\n')
+            line_beg = 1;
+        c = getch();
+    }
 
-    if (c != EOF)
+    if(c != EOF)
         *w++ = c;
 
-    if (!isalpha(c)) {
+    if(c == '#' && line_beg == 1) { /* Preprocessor directive */
+        while((c = getch()) != '\n' && c != EOF) /* Go to end of line */
+            ;
+        return getword(word, lim); /* Start over */
+    }
+    line_beg = 0;
+
+    if(c == '\\') /* Set after_slash flag */
+        after_slash = after_slash ? 0 : 1; /* Ignore '\\' comment */
+
+    else if(c == '/' ) {
+        if((c = getch()) == '*' && !after_slash) { /* Begin comment */
+            while((c = getch()) != EOF) {
+                if(c == '/') {
+                    if(after_star) /* End comment */
+                        return getword(word, lim); /* Start over */
+                }
+                else if(c == '*' && !after_slash)
+                    after_star = 1;
+                else if(c == '\\')
+                    after_slash = after_slash ? 0 : 1; /* Ignore '\\' comments */
+                else {
+                    after_star = 0;
+                    after_slash = 0;
+                }
+            }
+        } /* End comment */
+
+        after_slash = 0; /* Not after slash anymore */
+        if(c != EOF)
+            ungetch(c);
+    }
+
+    else if(c == '\"') {
+        if(!after_slash) { /* String literal */
+            --w; /* Reset w */
+            while((c = getch()) != EOF) {
+                if(c == '\"' && !after_slash)
+                    break;
+                else if(c == '\\')
+                    after_slash = after_slash ? 0 : 1; /* Ignore '\\' comments */
+                else
+                    after_slash = 0;
+                *w++ = c;
+            }
+            *w = '\0';
+            if(c == EOF)
+                return EOF;
+            else
+                return getword(word, lim); /* Start over. */
+        }
+        after_slash = 0; /* Not after a slash anymore. */
+    }
+
+    if(!isalpha(c) && c != '_') { /* It's a symbol. */
         *w = '\0';
+        if(c != '\\')
+            after_slash = 0;
         return c;
     }
 
-    for (;--lim > 0; w++)
-        if (!isalnum(*w = getch())) {
+    /* Reset this flag since a slash would have just returned. */
+    after_slash = 0;
+
+    for( ; --lim > 0; ++w) /* It's a word or letter. */
+        if(!isalnum(*w = getch()) && *w != '_') {
             ungetch(*w);
             break;
         }
     *w = '\0';
     return word[0];
+
 }
 
 #define BUFSIZE 100
