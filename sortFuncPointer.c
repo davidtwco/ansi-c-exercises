@@ -13,7 +13,10 @@ void writelines(char *lineptr[], int nlines);
 void _qsort(void *lineptr[], int left, int right,
            int (*comp)(void*, void*), int rev);
 int numcmp(const char *s1, const char *s2);
-int foldcmp(const char *s1, const char *s2);
+int cstrcmp(const char *s1, const char *s2);
+
+int fold = 0; /* 1 if fold cases */
+int dir = 0; /* 1 if dir chars */
 
 /* example from Ch 5, Sec 5.11, Pg 119 */
 
@@ -22,7 +25,6 @@ int main(int argc, char *argv[]) {
     int nlines; /* number of input lines read */
     int numeric = 0; /* 1 if numeric sort */
     int reverse = 0; /* 1 if reverse sort */
-    int fold = 0; /* 1 if fold cases */
     char k;
 
     /* We must to walk through the arguments, looking for '-' */
@@ -39,6 +41,9 @@ int main(int argc, char *argv[]) {
                     case 'f':
                         fold = 1;
                         break;
+                    case 'd':
+                        dir = 1;
+                        break;
                     default:
                         ;
                 }
@@ -49,7 +54,7 @@ int main(int argc, char *argv[]) {
     if ((nlines = readlines(lineptr, MAXLINES)) >= 0) {
         printf("\nsorted:\n\n");
         _qsort((void **) lineptr, 0, nlines - 1,
-               (int (*)(void*,void*))(numeric ? numcmp : (fold ? foldcmp : strcmp)),
+               (int (*)(void*,void*))(numeric ? numcmp : cstrcmp),
                reverse);
         writelines(lineptr, nlines);
         return 0;
@@ -59,16 +64,30 @@ int main(int argc, char *argv[]) {
     }
 }
 
-int foldcmp(const char *s1, const char *s2) {
+int cstrcmp(const char *s1, const char *s2) {
     int l1 = strlen(s1), l2 = strlen(s2);
     int i;
     char v1[l1], v2[l2];
 
-    for (i = 0; i < l1; i++)
-        v1[i] = tolower(s1[i]);
+    for (i = 0; i < l1; i++) {
+        if (dir && !(isalpha(s1[i]) || isdigit(s1[i]) || s1[i] == ' '))
+            continue;
 
-    for (i = 0; i < l2; i++)
-        v2[i] = tolower(s2[i]);
+        if (fold)
+            v1[i] = tolower(s1[i]);
+        else
+            v1[i] = s1[i];
+    }
+
+    for (i = 0; i < l2; i++) {
+        if (dir && !(isalpha(s2[i]) || isdigit(s2[i]) || s2[i] == ' '))
+            continue;
+
+        if (fold)
+            v2[i] = tolower(s2[i]);
+        else
+            v2[i] = s2[i];
+    }
 
     return strcmp(v1, v2);
 }
