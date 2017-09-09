@@ -1,10 +1,9 @@
-/* example from Ch 2, Sec 2.3, Pg 39 */
+/* example from Ch 5, Sec 5.3, Pg 99 */
 /* strlen: return length of s */
-int strlen(char s[]) {
-    int i;
+int strlen(char *s) {
+    int n;
 
-    i = 0;
-    while(s[i] != '\0')
-        ++i;
-    return i;
+    for (n = 0; *s != '\0'; s++)
+        ++n;
+    return n;
 }
