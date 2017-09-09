@@ -1,13 +1,29 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define SIZE_OF_TAB 8 /* size of tabs in spaces */
-
 // It is recommended that when testing, the space character is
 // replaced with something visible.
 
 int main(int argc, char *argv[]) {
     int c, i, col, count, nextTabSize, currentTabSize;
+    int m = 0, n = 8, cnt;
+    char k;
+
+    /* We must to walk through the arguments, looking for '-' */
+    while(--argc > 0) {
+        if((*++argv)[0] == '-') {
+            /* Count letters after it */
+            cnt = 1;
+            while((k = *++argv[0]))
+                switch(k) {
+                    case 'n':
+                        n = atoi(*(argv+cnt++));
+                        break;
+                    default:
+                        ;
+                }
+        }
+    }
 
     count = 0;
     col = 0;
@@ -19,7 +35,11 @@ int main(int argc, char *argv[]) {
                 // We need to keep track of what size the tab
                 // will be when we print it - this will vary
                 // depending on the distance to the tab stop.
-                nextTabSize = (--argc > 0) ? atoi(*++argv) : SIZE_OF_TAB;
+                nextTabSize = (m != 0) ? m : n;
+
+                if (m != 0)
+                    m = 0;
+
                 currentTabSize = nextTabSize - (col % nextTabSize);
 
                 if (count >= currentTabSize) {
