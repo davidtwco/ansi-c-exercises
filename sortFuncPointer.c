@@ -10,7 +10,7 @@ int readlines(char *lineptr[], int nlines);
 void writelines(char *lineptr[], int nlines);
 
 void _qsort(void *lineptr[], int left, int right,
-           int (*comp)(void*, void*));
+           int (*comp)(void*, void*), int rev);
 int numcmp(const char *s1, const char *s2);
 
 /* example from Ch 5, Sec 5.11, Pg 119 */
@@ -19,14 +19,32 @@ int numcmp(const char *s1, const char *s2);
 int main(int argc, char *argv[]) {
     int nlines; /* number of input lines read */
     int numeric = 0; /* 1 if numeric sort */
+    int reverse = 0; /* 1 if reverse sort */
+    char k;
 
-    if (argc > 1 && strcmp(argv[1], "-n") == 0)
-        numeric = 1;
+    /* We must to walk through the arguments, looking for '-' */
+    while(--argc > 0) {
+        if((*++argv)[0] == '-') {
+            while((k = *++argv[0])) {
+                switch(k) {
+                    case 'n':
+                        numeric = 1;
+                        break;
+                    case 'r':
+                        reverse = 1;
+                        break;
+                    default:
+                        ;
+                }
+            }
+        }
+    }
 
     if ((nlines = readlines(lineptr, MAXLINES)) >= 0) {
         printf("\nsorted:\n\n");
         _qsort((void **) lineptr, 0, nlines - 1,
-               (int (*)(void*,void*))(numeric ? numcmp : strcmp));
+               (int (*)(void*,void*))(numeric ? numcmp : strcmp),
+               reverse);
         writelines(lineptr, nlines);
         return 0;
     } else {
@@ -51,19 +69,25 @@ int numcmp(const char *s1, const char *s2) {
 void swap(void* lineptr[], int i, int j);
 
 void _qsort(void *lineptr[], int left, int right,
-           int (*comp)(void*, void*)) {
+           int (*comp)(void*, void*), int rev) {
     int i, last;
+    int comparison;
 
     if (left >= right) /* do nothing if array contains */
         return;        /* fewer than two elements */
     swap(lineptr, left, (left + right)/2); /* move partition elem */
     last = left;                     /* to v[0] */
-    for (i = left+1; i <= right; i++) /* partition */
-        if ((*comp)(lineptr[i], lineptr[left]) < 0)
+    for (i = left+1; i <= right; i++) { /* partition */
+        comparison = (*comp)(lineptr[i], lineptr[left]);
+
+        if (rev && comparison >= 0)
             swap(lineptr, ++last, i);
+        else if (!rev && comparison < 0)
+            swap(lineptr, ++last, i);
+    }
     swap(lineptr, left, last); /* restore partition elem */
-    _qsort(lineptr, left, last - 1, comp);
-    _qsort(lineptr, last + 1, right, comp);
+    _qsort(lineptr, left, last - 1, comp, rev);
+    _qsort(lineptr, last + 1, right, comp, rev);
 }
 
 /* swap: interchange lineptr[i] and v[j] */
