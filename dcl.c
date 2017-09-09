@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define MAXTOKEN 100
@@ -43,6 +44,8 @@ void dcl(void) {
         strcat(out, " pointer to");
 }
 
+void paramdcl(void);
+
 /* dirdcl: parse a direct declarator */
 void dirdcl(void) {
     int type;
@@ -60,14 +63,84 @@ void dirdcl(void) {
         errtoken = ERR_YES;
     }
 
-    while ((type=gettoken()) == PARENS || type == BRACKETS)
+    while ((type=gettoken()) == PARENS || type == BRACKETS || type == '(')
         if (type == PARENS)
             strcat(out, " function returning");
-        else {
+        else if (type == '(') {
+            strcat(out, " function expecting");
+            paramdcl();
+            strcat(out, " and returning");
+        } else {
             strcat(out, " array");
             strcat(out, token);
             strcat(out, " of");
         }
+}
+
+void dclspec(void);
+
+void paramdcl(void) {
+    do {
+        dclspec();
+    } while (tokentype == ',');
+
+    if (tokentype != ')')
+        printf("error: missing ) in parameter declaration");
+}
+
+int typespecifier(void);
+int typequalifier(void);
+
+void dclspec(void) {
+    char temp[MAXTOKEN];
+    temp[0] = '\0';
+    gettoken();
+
+    do {
+        if (tokentype != NAME) {
+            errtoken = ERR_YES;
+            dcl();
+        } else if (typespecifier() || typequalifier()) {
+            strcat(temp, " ");
+            strcat(temp, token);
+            gettoken();
+        } else {
+            printf("error: unknown type in param list\n");
+            errtoken = ERR_YES;
+        }
+    } while (tokentype != ',' && tokentype != ')');
+
+    strcat(out, temp);
+    if (tokentype == ',')
+        strcat(out, ",");
+}
+
+int compare(const void *s, const void *t);
+
+int typespecifier(void) {
+    static char *type[] = { "char", "int", "void" };
+    char *pt = token;
+
+    if (bsearch(&pt, type, sizeof(type)/sizeof(char *), sizeof(char *), compare) == NULL)
+        return 0;
+    return 1;
+}
+
+int typequalifier(void) {
+    static char *type[] = { "const", "volatile" };
+    char *pt = token;
+
+    if (bsearch(&pt, type, sizeof(type)/sizeof(char *), sizeof(char *), compare) == NULL)
+        return 0;
+    return 1;
+}
+
+int compare(const void *s, const void *t) {
+    char **chs;
+    char **cht;
+    chs = (char **) s;
+    cht = (char **) t;
+    return strcmp(*chs, *cht);
 }
 
 int getch(void);
