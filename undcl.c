@@ -3,6 +3,7 @@
 #include <string.h>
 
 #define MAXTOKEN 100
+#define MAXPOINTERS 10
 
 enum { NAME, PARENS, BRACKETS };
 
@@ -11,20 +12,54 @@ int tokentype; /* type of last token */
 char token[MAXTOKEN]; /* last token string */
 char out[1000]; /* output string */
 
+int getch(void);
+void ungetch(int);
+
 /* example from Ch 5, Sec 5.12, Pg 126 */
 
 /* undcl: convert word description to declaration */
 int main() {
     int type;
+    int i, c, pcount;
     char temp[MAXTOKEN];
+    /* We use p to store a string with all the * characters
+     * that we will output. */
+    char p[MAXPOINTERS];
 
     while (gettoken() != EOF) {
         strcpy(out, token);
         while((type = gettoken()) != '\n')
             if (type == PARENS || type == BRACKETS)
                 strcat(out, token);
+            /* Extra parentheses are introduced when we are
+             * dealing with * characters. */
             else if (type == '*') {
-                sprintf(temp, "(*%s)", out);
+                /* Count the first character */
+                pcount++;
+
+                /* Count all the * characters */
+                while ((c = getch()) == '*' || c == ' '){
+                    if (c == '*'){
+                        if (pcount < (MAXPOINTERS - 1))
+                            pcount++;
+                        else
+                            break;
+                    }
+                }
+                /* Put back the last character that wasn't
+                 * a *. */
+                ungetch(c);
+
+                /* Build up our string of *s */
+                for (i = 0; i < pcount; i++){
+                    p[i] = '*';
+                }
+                p[i] = '\0';
+
+                /* Reset the count for future pointers. */
+                pcount = 0;
+
+                sprintf(temp, "(%s%s)", p, out);
                 strcpy(out, temp);
             } else if (type == NAME) {
                 sprintf(temp, "%s %s", token, out);
@@ -35,9 +70,6 @@ int main() {
     }
     return 0;
 }
-
-int getch(void);
-void ungetch(int);
 
 int gettoken(void) {
     int c;
