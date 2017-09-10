@@ -93,7 +93,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 6-3 (Pg 143)** - Write a cross-referencer that prints a list of all words in a document, and, for each word, a list of the line numbers on which it occurs. Remove noise words like "the," "and," and so on. - [Solution](crossReferencer.c)
 - [x] **Ex 6-4 (Pg 143)** - Write a program that prints the distinct words in its input sorted into decreasing order of frequency of occurrence. Precede each word by its count. - [Solution](distinctWordFrequency.c)
 - [x] **Ex 6-5 (Pg 145)** - Write a function `undef` that will remove a name and definition from the table maintained by `lookup` and `install`. - [Solution](tableLookup.c)
-- [ ] **Ex 6-6 (Pg 145)** - Implement a simple version of the `#define` processor (i.e., no arguments) suitable for use with C programs, based on the routines of this section. You may also find `getch` and `ungetch` helpful.
+- [x] **Ex 6-6 (Pg 145)** - Implement a simple version of the `#define` processor (i.e., no arguments) suitable for use with C programs, based on the routines of this section. You may also find `getch` and `ungetch` helpful. - [Solution](defineProcessor.c)
 
 ## Chapter 7 - Input and Output
 - [ ] **Ex 7-1 (Pg 153)** - Write a program that converts upper case to lower or lower case to upper, depending on the name it is invoked with, as found in `argv[0]`.
