@@ -107,8 +107,9 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 7-9 (Pg 168)** - Functions like `isupper` can be implemented to save space or to save time. Explore both possibilities. - [Solution](isupper.c)
 
 ## Chapter 8 - The UNIX System Interface
+*A majority of the solutions to this chapter are heavily inspired by other solutions found online.*
 - [x] **Ex 8-1 (Pg 174)** - Rewrite the program `cat` from Chapter 7 using `read`, `write`, `open` and `close` instead of their standard library equivalents. Perform experiments to determine the relative speeds of the two versions. - [Solution](cat.c)
-- [ ] **Ex 8-2 (Pg 178)** - Rewrite `fopen` and `_fillbuf` with fields instead of explicit bit operations. Compare code size and execution speed.
+- [x] **Ex 8-2 (Pg 178)** - Rewrite `fopen` and `_fillbuf` with fields instead of explicit bit operations. Compare code size and execution speed. - [Solution](fopen.c)
 - [ ] **Ex 8-3 (Pg 179)** - Design and write `_flushbuf`, `fflush` and `fclose`.
 - [ ] **Ex 8-4 (Pg 179)** - The standard library function `int fseek(FILE *fp, long offset, int origin)` is identical to `lseek` except that `fp` is a file pointer instead of a file descriptor and the return value is an `int` status, not a position. Write `fseek`. Make sure that your `fseek` coordinates properly with the buffering done for the other functions of the library.
 - [ ] **Ex 8-5 (Pg 184)** - Modify the `fsize` program to print the other information contained in the inode entry.
