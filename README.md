@@ -110,7 +110,7 @@ All files will either be from a commit that lists the exercise or will contain a
 *A majority of the solutions to this chapter are heavily inspired by other solutions found online.*
 - [x] **Ex 8-1 (Pg 174)** - Rewrite the program `cat` from Chapter 7 using `read`, `write`, `open` and `close` instead of their standard library equivalents. Perform experiments to determine the relative speeds of the two versions. - [Solution](cat.c)
 - [x] **Ex 8-2 (Pg 178)** - Rewrite `fopen` and `_fillbuf` with fields instead of explicit bit operations. Compare code size and execution speed. - [Solution](fopen.c)
-- [ ] **Ex 8-3 (Pg 179)** - Design and write `_flushbuf`, `fflush` and `fclose`.
+- [x] **Ex 8-3 (Pg 179)** - Design and write `_flushbuf`, `fflush` and `fclose`. - [Solution](fopen.c)
 - [ ] **Ex 8-4 (Pg 179)** - The standard library function `int fseek(FILE *fp, long offset, int origin)` is identical to `lseek` except that `fp` is a file pointer instead of a file descriptor and the return value is an `int` status, not a position. Write `fseek`. Make sure that your `fseek` coordinates properly with the buffering done for the other functions of the library.
 - [ ] **Ex 8-5 (Pg 184)** - Modify the `fsize` program to print the other information contained in the inode entry.
 - [ ] **Ex 8-6 (Pg 189)** - The standard library function `calloc(n,size)` returns a pointer to `n` objects of size `size`, with the storage initialized to zero. Write `calloc`, by calling `malloc` or by modifying it.
