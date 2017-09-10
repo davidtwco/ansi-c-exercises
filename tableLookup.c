@@ -12,13 +12,14 @@ struct nlist { /* table entry */
 
 static struct nlist *hashtab[HASHSIZE]; /* pointer table */
 
-/* example from Ch 6, Sec 6.6, Pg 144, 145 */
+struct nlist *install(char *name, char *defn);
+struct nlist *lookup(char *s);
+int undef(char * name);
 
 int main() {
 }
 
 unsigned hash(char *s);
-struct nlist *lookup(char *s);
 char *_strdup(char *s);
 
 struct nlist *install(char *name, char *defn) {
@@ -37,6 +38,45 @@ struct nlist *install(char *name, char *defn) {
     if ((np->defn = _strdup(defn)) == NULL)
         return NULL;
     return np;
+}
+
+int undef(char * name) {
+    struct nlist * np1, * np2;
+
+    /* If we don't find an existing record then there is
+     * nothing to remove. */
+    if ((np1 = lookup(name)) == NULL)
+        return 1;
+
+    /* Walk along the list, keeping track of the previous
+     * record we had. */
+    for (np1 = np2 = hashtab[hash(name)]; np1 != NULL;
+         np2 = np1, np1 = np1->next ) {
+        /* We found the record to remove */
+        if (strcmp(name, np1->name) == 0) {
+
+            /*  Remove node from list  */
+            if (np1 == np2)
+                /* If there was no previous record, ie. we're
+                 * at the root of the table, then set the table
+                 * pointer to np1's next. */
+                hashtab[hash(name)] = np1->next;
+            else
+                /* Replace the previous node's next pointer
+                 * (that was pointing at np1) to the record
+                 * that np1's next pointer is pointing at. */
+                np2->next = np1->next;
+
+            /* Free up memory. */
+            free(np1->name);
+            free(np1->defn);
+            free(np1);
+
+            return 0;
+        }
+    }
+
+    return 1; /* Name not found. */
 }
 
 /* hash: form hash value for string s */
