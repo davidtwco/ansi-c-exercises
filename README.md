@@ -96,7 +96,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 6-6 (Pg 145)** - Implement a simple version of the `#define` processor (i.e., no arguments) suitable for use with C programs, based on the routines of this section. You may also find `getch` and `ungetch` helpful. - [Solution](defineProcessor.c)
 
 ## Chapter 7 - Input and Output
-- [ ] **Ex 7-1 (Pg 153)** - Write a program that converts upper case to lower or lower case to upper, depending on the name it is invoked with, as found in `argv[0]`.
+- [x] **Ex 7-1 (Pg 153)** - Write a program that converts upper case to lower or lower case to upper, depending on the name it is invoked with, as found in `argv[0]`. - [Solution](upperOrLower.c)
 - [ ] **Ex 7-2 (Pg 155)** - Write a program that will print arbitrary input in a sensible way. As a minimum, it should print non-graphic characters in octal or hexadecimal according to local custom, and break long text lines.
 - [ ] **Ex 7-3 (Pg 156)** - Revise `minprintf` to handle more of the facilities of `printf`.
 - [ ] **Ex 7-4 (Pg 159)** - Write a private version of `scanf` analogous to `minprintf` from the previous section.
