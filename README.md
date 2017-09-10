@@ -98,7 +98,7 @@ All files will either be from a commit that lists the exercise or will contain a
 ## Chapter 7 - Input and Output
 - [x] **Ex 7-1 (Pg 153)** - Write a program that converts upper case to lower or lower case to upper, depending on the name it is invoked with, as found in `argv[0]`. - [Solution](upperOrLower.c)
 - [x] **Ex 7-2 (Pg 155)** - Write a program that will print arbitrary input in a sensible way. As a minimum, it should print non-graphic characters in octal or hexadecimal according to local custom, and break long text lines. - [Solution](printArbitraryHexOct.c)
-- [ ] **Ex 7-3 (Pg 156)** - Revise `minprintf` to handle more of the facilities of `printf`.
+- [x] **Ex 7-3 (Pg 156)** - Revise `minprintf` to handle more of the facilities of `printf`. - [Solution](minprintf.c)
 - [ ] **Ex 7-4 (Pg 159)** - Write a private version of `scanf` analogous to `minprintf` from the previous section.
 - [ ] **Ex 7-5 (Pg 159)** - Rewrite the postfix calculator of Chapter 4 to use `scanf` and/or `sscanf` to do the input and number conversion.
 - [ ] **Ex 7-6 (Pg 165)** - Write a program to compare two files, printing the first line where they differ.
