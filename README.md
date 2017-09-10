@@ -104,7 +104,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 7-6 (Pg 165)** - Write a program to compare two files, printing the first line where they differ. - [Solution](diff.c)
 - [x] **Ex 7-7 (Pg 165)** - Modify the pattern finding program of Chapter 5 to take its input from a set of named files or, if no files are named as arguments, from the standard input. Should the file name be printed when a matching line is found? - [Solution](find.c)
 - [x] **Ex 7-8 (Pg 165)** - Write a program to print a set of files, starting each new one on a new page, with a title and a running page count for each file. - [Solution](pager.c)
-- [ ] **Ex 7-9 (Pg 168)** - Functions like `isupper` can be implemented to save space or to save time. Explore both possibilities.
+- [x] **Ex 7-9 (Pg 168)** - Functions like `isupper` can be implemented to save space or to save time. Explore both possibilities. - [Solution](isupper.c)
 
 ## Chapter 8 - The UNIX System Interface
 - [ ] **Ex 8-1 (Pg 174)** - Rewrite the program `cat` from Chapter 7 using `read`, `write`, `open` and `close` instead of their standard library equivalents. Perform experiments to determine the relative speeds of the two versions.
