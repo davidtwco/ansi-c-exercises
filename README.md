@@ -1,7 +1,7 @@
 # ansi-c-exercises
 This repository contains my solutions to the exercises from The C Programming Language by Brian Kernighan and Dennis Ritchie.
 
-All files will either be from a commit that lists the exercise or will contain a comment detailing where the example was copied from.
+All files will either be from a commit that lists the exercise or will contain a comment detailing where the example was copied from. Some solutions are inspired by those found online, especially in the later chapters.
 
 ## Chapter 1 - A Tutorial Introduction
 - [x] **Ex 1-1 (Pg 8)** - Run the "hello world" program on your system. Experiment with leaving out parts of the program, to see what error messages you get.
