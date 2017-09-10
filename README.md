@@ -102,7 +102,7 @@ All files will either be from a commit that lists the exercise or will contain a
 - [x] **Ex 7-4 (Pg 159)** - Write a private version of `scanf` analogous to `minprintf` from the previous section. - [Solution](minscanf.c)
 - [x] **Ex 7-5 (Pg 159)** - Rewrite the postfix calculator of Chapter 4 to use `scanf` and/or `sscanf` to do the input and number conversion. - [Solution](calculator.c)
 - [x] **Ex 7-6 (Pg 165)** - Write a program to compare two files, printing the first line where they differ. - [Solution](diff.c)
-- [ ] **Ex 7-7 (Pg 165)** - Modify the pattern finding program of Chapter 5 to take its input from a set of named files or, if no files are named as arguments, from the standard input. Should the file name be printed when a matching line is found?
+- [x] **Ex 7-7 (Pg 165)** - Modify the pattern finding program of Chapter 5 to take its input from a set of named files or, if no files are named as arguments, from the standard input. Should the file name be printed when a matching line is found? - [Solution](find.c)
 - [ ] **Ex 7-8 (Pg 165)** - Write a program to print a set of files, starting each new one on a new page, with a title and a running page count for each file.
 - [ ] **Ex 7-9 (Pg 168)** - Functions like `isupper` can be implemented to save space or to save time. Explore both possibilities.
 
