@@ -1,23 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include "unistd.h"
+
+void filecopy(int from, int to);
 
 /* cat: concatenate files, version 2 */
 int main(int argc, char *argv[]) {
-    FILE *fp;
-    void filecopy(FILE *, FILE *);
+    int fd1;
     char *prog = argv[0]; /* program name for errors */
 
     if (argc == 1) /* no args; copy standard input */
-        filecopy(stdin, stdout);
+        filecopy(0, 1);
     else
         while (--argc > 0)
-            if ((fp = fopen(*++argv, "r")) == NULL) {
+            if ((fd1 = open(*++argv, O_RDONLY, 0)) == -1) {
                 fprintf(stderr, "%s: can't open %s\n",
                         prog, *argv);
                 exit(1);
             } else {
-                filecopy(fp, stdout);
-                fclose(fp);
+                filecopy(fd1, 1);
+                close(fd1);
             }
     if (ferror(stdout)) {
         fprintf(stderr, "%s: error writing stdout\n", prog);
@@ -27,9 +30,10 @@ int main(int argc, char *argv[]) {
 }
 
 /* filecopy: copy file ifp to file ofp */
-void filecopy(FILE *ifp, FILE *ofp) {
-    int c;
+void filecopy(int from, int to) {
+    int n;
+    char buf[BUFSIZ];
 
-    while ((c = getc(ifp)) != EOF)
-        putc(c, ofp);
+    while((n=read(from, buf, BUFSIZ)) > 0 )
+        write(to, buf, n);
 }
