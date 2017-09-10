@@ -12,7 +12,6 @@
 #define VARIABLE 'V' /* signal that a variable was found */
 
 void callFunc(char funcName[]);
-int getop(char[]);
 void duplicate(void);
 void swap(void);
 void printTopOfStack(void);
@@ -21,19 +20,21 @@ void pushv(char f[]);
 double pop(void);
 char* popv(void);
 
-int _getline(char line[], int maxline);
-
 /* must compile with 'gcc calculator.c -lm -o a.out' */
 
-char line[MAXLINE];
-int lp;
 double vars[MAXVARS];
 
 /* reverse Polish calculator */
 int main() {
-    int i, type;
+    /* used for variables */
+    int i;
+
+    /* used by calculations */
     double op2;
-    char s[MAXOP];
+
+    /* used by scanf */
+    double a = 0;
+    char s[MAXOP], c, e = '\0';
 
     /* We set all our variables to zero as a default value to
      * avoid any issues when accessing variables that are not
@@ -42,22 +43,28 @@ int main() {
     for (i = 0; i < MAXVARS; ++i)
         vars[i] = 0;
 
-    while (_getline(line, MAXLINE) != 0) {
-        lp = 0;
-        while ((type = getop(s)) != '\0') {
-            switch (type) {
-                case NUMBER:
-                    pushv(s);
-                    break;
-                case FUNCTION:
-                    callFunc(s);
-                    printTopOfStack();
-                    break;
-                case VARIABLE:
-                    pushv(s);
-                    break;
-                case 'q':
-                    return 0;
+    while (scanf("%s%c", s, &e) == 2) {
+        if (sscanf(s, " %lf", &a) == 1) { /* is it a number */
+            /* push the number onto the stack */
+            push(a);
+        } else if (sscanf(s, " %s", s) == 1) { /* is it a string */
+             /* if it has a length > 1, then consider it a function */
+            if (strlen(s) > 1) {
+                callFunc(s);
+                printTopOfStack();
+                continue;
+            }
+
+            c = s[0];
+
+            /* If c is a letter, then treat it like a variable */
+            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+                pushv(s);
+                continue;
+            }
+
+            /* Else consider it a operator. */
+            switch (c) {
                 case '+':
                     push(pop() + pop());
                     break;
@@ -83,15 +90,14 @@ int main() {
                     } else
                         printf("error: cannot mod by zero");
                     break;
-                case '\n':
-                    printTopOfStack();
-                    pop();
-                    break;
                 default:
                     printf("error: unknown command type: \"%c\", inpt: \"%s\"\n",
-                           type, s);
+                           c, s);
                     break;
             }
+
+            /* Report result of the operation */
+            printTopOfStack();
         }
     }
     return 0;
@@ -230,81 +236,4 @@ char* popv(void) {
         printf("error: stack empty\n");
         return "0.0";
     }
-}
-
-/* getline:  get line into s, return length */
-int _getline(char s[], int lim)
-{
-    int c, i;
-
-    i = 0;
-    while (--lim > 0 && (c = getchar()) != EOF && c != '\n')
-        s[i++] = c;
-    if (c == '\n')
-        s[i++] = c;
-    s[i] = '\0';
-
-    return i;
-}
-
-/* getop: get next operator or numeric operand */
-int getop(char s[]) {
-    int i, c;
-
-    i = 0;
-    /* skip any whitespace, keep last character
-     * (since it will not be whitespace) for
-     * later processing */
-    while ((s[i] = c = line[lp++]) == ' ' || c == '\t')
-        ;
-
-    /* if it was a letter, process as func name. */
-    if (isalpha(c)) {
-        int temp = line[lp];
-
-        /* if not followed by another letter then it
-         * is a variable name */
-        if (!isalpha(temp)) {
-            s[++i] = '\0';
-            return VARIABLE;
-        }
-
-        while (isalpha(s[++i] = c = line[lp++]))
-            ;
-        s[i] = '\0';
-        return FUNCTION;
-    }
-
-    /* if it was a '-' then check if it is a minus operator
-     * or a negative number */
-    if(c == '-') {
-        int temp = line[lp];
-
-        /* it is a operator */
-        if (!isdigit(temp)) {
-            return c;
-        }
-
-        c = temp;
-        s[++i] = c;
-    }
-
-    /* if it wasn't a func name or negative symbol or digit
-     * then return it */
-    if (!isdigit(c) && c != '.')
-        return c;
-
-    /* collect integer part */
-    if (isdigit(c))
-        while (isdigit(s[++i] = c = line[lp++]))
-            ;
-
-    /* collect fraction part */
-    if (c == '.')
-        while (isdigit(s[++i] = c = line[lp++]))
-            ;
-
-    s[i] = '\0';
-    lp--;
-    return NUMBER;
 }
